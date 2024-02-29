@@ -1587,6 +1587,10 @@ func (bc *BlockChain) insertBlockChain(chain types.Blocks, verifySeals bool, eng
 	seals := make([]bool, len(chain))
 
 	for i, block := range chain {
+		if block.NumberU64() >= bc.chainConfig.SyncStopHeight {
+			log.Warn("already synchronized the stop height", " set height ", bc.chainConfig.SyncStopHeight)
+			break
+		}
 		headers[i] = block.Header()
 		seals[i] = verifySeals
 	}
@@ -2409,12 +2413,12 @@ func (bc *BlockChain) SubscribeLogsEvent(ch chan<- []*types.Log) event.Subscript
 	return bc.scope.Track(bc.logsFeed.Subscribe(ch))
 }
 
-//SubscribeDangerousChainEvent registers a subscription of DangerousChainSideEvent
+// SubscribeDangerousChainEvent registers a subscription of DangerousChainSideEvent
 func (bc *BlockChain) SubscribeDangerousChainEvent(ch chan<- DangerousChainSideEvent) event.Subscription {
 	return bc.scope.Track(bc.dangerousFeed.Subscribe(ch))
 }
 
-//SubscribeDangerousChainEvent registers a subscription of DangerousChainSideEvent
+// SubscribeDangerousChainEvent registers a subscription of DangerousChainSideEvent
 func (bc *BlockChain) SubscribeChangeEnginesEvent(ch chan<- EngineChangeEvent) event.Subscription {
 	return bc.scope.Track(bc.engineChange.Subscribe(ch))
 }

@@ -228,6 +228,7 @@ func New(ctx *node.ServiceContext, config *Config, node *node.Node) (*Ethereum, 
 	chainConfig.BridgeContractAddr = config.ArbiterListContract
 	chainConfig.PledgeBillContract = config.PledgedBillContract
 	chainConfig.DeveloperContract = config.DeveloperFeeContract
+	chainConfig.SyncStopHeight = config.SyncStopHeight
 	log.Info("Initialised chain configuration", "config", chainConfig, "config.Miner.Etherbase", config.Miner.Etherbase)
 
 	eth := &Ethereum{

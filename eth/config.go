@@ -179,4 +179,5 @@ type Config struct {
 	ArbiterListContract  string
 	PledgedBillContract  string
 	DeveloperFeeContract []string
+	SyncStopHeight       uint64
 }

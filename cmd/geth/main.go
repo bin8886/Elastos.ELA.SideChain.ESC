@@ -184,6 +184,7 @@ var (
 		utils.UpdateArbiterListToLayer1Flag,
 		utils.PledgedBillContract,
 		utils.DeveloperFeeContract,
+		utils.SyncEndHeight,
 	}
 
 	rpcFlags = []cli.Flag{

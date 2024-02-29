@@ -21,6 +21,7 @@ import (
 	"crypto/ecdsa"
 	"errors"
 	"fmt"
+	"github.com/elastos/Elastos.ELA.SideChain.ESC/common/math"
 	"io"
 	"io/ioutil"
 	"math/big"
@@ -830,6 +831,12 @@ var (
 		Usage: "configue developer fee contract address",
 		Value: &cli.StringSlice{},
 	}
+
+	SyncEndHeight = cli.Uint64Flag{
+		Name:  "sync.end.height",
+		Usage: "configue sync stop height",
+		Value: math.MaxInt64,
+	}
 )
 
 // MakeDataDir retrieves the currently requested data directory, terminating
@@ -1620,6 +1627,7 @@ func SetEthConfig(ctx *cli.Context, stack *node.Node, cfg *eth.Config) {
 	cfg.PbftKeyStorePassWord = MakeDposPasswordList(ctx)
 	cfg.PbftIPAddress = ctx.GlobalString(PbftIPAddress.Name)
 	cfg.PbftDPosPort = uint16(ctx.GlobalUint(PbftDposPort.Name))
+	cfg.SyncStopHeight = ctx.GlobalUint64(SyncEndHeight.Name)
 
 	cfg.DynamicArbiterHeight = ctx.GlobalUint64(DynamicArbiter.Name)
 	cfg.PledgedBillContract = ctx.GlobalString(PledgedBillContract.Name)

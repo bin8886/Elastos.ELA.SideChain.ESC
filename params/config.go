@@ -467,6 +467,7 @@ type ChainConfig struct {
 	BridgeContractAddr    string
 	PledgeBillContract    string
 	DeveloperContract     []string
+	SyncStopHeight        uint64
 }
 
 // EthashConfig is the consensus engine configs for proof-of-work based sealing.
