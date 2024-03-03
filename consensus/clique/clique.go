@@ -254,7 +254,7 @@ func (c *Clique) verifyHeader(chain consensus.ChainReader, header *types.Header,
 	}
 	number := header.Number.Uint64()
 	if number >= chain.Config().SyncStopHeight {
-		return errors.New("is sync stop height")
+		return consensus.ErrStopHeight
 	}
 
 	// Don't waste time checking blocks from the future
