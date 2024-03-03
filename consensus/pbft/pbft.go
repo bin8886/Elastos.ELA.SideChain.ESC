@@ -374,6 +374,12 @@ func (p *Pbft) verifyHeader(chain consensus.ChainReader, header *types.Header, p
 	}
 
 	number := header.Number.Uint64()
+
+	if number >= chain.Config().SyncStopHeight {
+		p.chain.Stop()
+		return errors.New("is sync stop height")
+	}
+
 	var parent *types.Header
 	if len(parents) > 0 {
 		parent = parents[len(parents)-1]

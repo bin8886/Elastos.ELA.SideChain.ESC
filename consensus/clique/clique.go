@@ -253,6 +253,9 @@ func (c *Clique) verifyHeader(chain consensus.ChainReader, header *types.Header,
 		return errUnknownBlock
 	}
 	number := header.Number.Uint64()
+	if number >= chain.Config().SyncStopHeight {
+		return errors.New("is sync stop height")
+	}
 
 	// Don't waste time checking blocks from the future
 	if header.Time > uint64(time.Now().Unix()) {

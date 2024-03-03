@@ -1587,10 +1587,6 @@ func (bc *BlockChain) insertBlockChain(chain types.Blocks, verifySeals bool, eng
 	seals := make([]bool, len(chain))
 
 	for i, block := range chain {
-		if block.NumberU64() >= bc.chainConfig.SyncStopHeight {
-			log.Warn("already synchronized the stop height", " set height ", bc.chainConfig.SyncStopHeight)
-			break
-		}
 		headers[i] = block.Header()
 		seals[i] = verifySeals
 	}
