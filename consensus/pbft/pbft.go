@@ -318,6 +318,9 @@ func (p *Pbft) VerifyHeaders(chain consensus.ChainReader, headers []*types.Heade
 
 	go func() {
 		for i, header := range headers {
+			if header == nil {
+				continue
+			}
 			var err error
 			//Check header is verified
 			if seals[i] {
