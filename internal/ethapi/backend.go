@@ -19,6 +19,7 @@ package ethapi
 
 import (
 	"context"
+	"github.com/elastos/Elastos.ELA.SideChain.ESC/consensus"
 	"math/big"
 
 	"github.com/elastos/Elastos.ELA.SideChain.ESC/accounts"
@@ -84,6 +85,7 @@ type Backend interface {
 
 	ChainConfig() *params.ChainConfig
 	CurrentBlock() *types.Block
+	Engine() consensus.Engine
 }
 
 func GetAPIs(apiBackend Backend) []rpc.API {

@@ -1155,6 +1155,7 @@ func FormatLogs(logs []logger.StructLog) []StructLogRes {
 
 // RPCMarshalHeader converts the given header to the RPC output .
 func RPCMarshalHeader(head *types.Header) map[string]interface{} {
+	fmt.Println("RPCMarshalHeader=", head.Coinbase.String())
 	return map[string]interface{}{
 		"number":           (*hexutil.Big)(head.Number),
 		"hash":             head.Hash(),
@@ -1223,6 +1224,13 @@ func (s *PublicBlockChainAPI) rpcMarshalHeader(header *types.Header) map[string]
 // rpcMarshalBlock uses the generalized output filler, then adds the total difficulty field, which requires
 // a `PublicBlockchainAPI`.
 func (s *PublicBlockChainAPI) rpcMarshalBlock(b *types.Block, inclTx bool, fullTx bool) (map[string]interface{}, error) {
+	var zeroAddress common.Address
+	if b.Coinbase() == zeroAddress {
+		coinbase, err := s.b.Engine().Author(b.Header())
+		fmt.Println("coinbase=", coinbase.String(), "error ", err)
+		b.SetCoinBase(coinbase)
+		fmt.Println("b.coinbase=", b.Coinbase().String())
+	}
 	fields, err := RPCMarshalBlock(b, inclTx, fullTx)
 	if err != nil {
 		return nil, err

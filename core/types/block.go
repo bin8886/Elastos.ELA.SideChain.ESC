@@ -336,6 +336,10 @@ func (b *Block) Extra() []byte            { return common.CopyBytes(b.header.Ext
 
 func (b *Block) Header() *Header { return CopyHeader(b.header) }
 
+func (b *Block) SetCoinBase(address common.Address) {
+	b.header.Coinbase = address
+}
+
 // Body returns the non-header content of the block.
 func (b *Block) Body() *Body { return &Body{b.transactions, b.uncles} }
 

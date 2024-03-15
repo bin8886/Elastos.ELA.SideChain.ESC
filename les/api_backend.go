@@ -19,6 +19,7 @@ package les
 import (
 	"context"
 	"errors"
+	"github.com/elastos/Elastos.ELA.SideChain.ESC/consensus"
 	"math/big"
 
 	"github.com/elastos/Elastos.ELA.SideChain.ESC/accounts"
@@ -56,6 +57,10 @@ func (b *LesApiBackend) CurrentBlock() *types.Block {
 func (b *LesApiBackend) SetHead(number uint64) {
 	b.eth.handler.downloader.Cancel()
 	b.eth.blockchain.SetHead(number)
+}
+
+func (b *LesApiBackend) Engine() consensus.Engine {
+	return b.eth.engine
 }
 
 func (b *LesApiBackend) HeaderByNumber(ctx context.Context, number rpc.BlockNumber) (*types.Header, error) {

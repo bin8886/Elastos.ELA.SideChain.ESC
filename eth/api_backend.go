@@ -19,6 +19,7 @@ package eth
 import (
 	"context"
 	"errors"
+	"github.com/elastos/Elastos.ELA.SideChain.ESC/consensus"
 	"math/big"
 
 	"github.com/elastos/Elastos.ELA.SideChain.ESC/accounts"
@@ -48,6 +49,10 @@ type EthAPIBackend struct {
 // ChainConfig returns the active chain configuration.
 func (b *EthAPIBackend) ChainConfig() *params.ChainConfig {
 	return b.eth.blockchain.Config()
+}
+
+func (b *EthAPIBackend) Engine() consensus.Engine {
+	return b.eth.engine
 }
 
 func (b *EthAPIBackend) CurrentBlock() *types.Block {
