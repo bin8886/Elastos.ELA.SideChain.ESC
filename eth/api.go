@@ -345,6 +345,13 @@ func (api *PrivateDebugAPI) GetBadBlocks(ctx context.Context) ([]*BadBlockArgs, 
 		if results[i].Block, err = ethapi.RPCMarshalBlock(block, true, true); err != nil {
 			results[i].Block = map[string]interface{}{"error": err.Error()}
 		}
+		log.Info(">>>>>> GetBadBlocks ", "block.Coinbase() ", block.Coinbase().String())
+		if block.Coinbase().String() == "0x0000000000000000000000000000000000000000" {
+			coinbase, err := api.eth.engine.Author(block.Header())
+			if err == nil {
+				results[i].Block["miner"] = coinbase
+			}
+		}
 	}
 	return results, nil
 }
